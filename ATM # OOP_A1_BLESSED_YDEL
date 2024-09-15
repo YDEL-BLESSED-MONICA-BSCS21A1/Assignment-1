@@ -1,0 +1,78 @@
+using System;
+
+class ATMSimulation
+{
+    static void Main(string[] args)
+    {
+        decimal balance = 1000.00m; // initial balance
+        bool running = true;
+
+        while (running)
+        {
+            Console.Clear();
+            Console.WriteLine(">> ----- ATM Simulation ----- <<");
+            Console.WriteLine("1. Check Balance");
+            Console.WriteLine("2. Deposit Money");
+            Console.WriteLine("3. Withdraw Money");
+            Console.WriteLine("4. Exit");
+            Console.Write("\r\nSelect an option: ");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1": // Check Balance
+                    Console.WriteLine($"\nYour current balance is: $ {balance:0.00}");
+                    break;
+
+                case "2": // Deposit Money
+                    Console.Write("\nEnter the amount to deposit: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal depositAmount) && depositAmount > 0)
+                    {
+                        balance += depositAmount;
+                        Console.WriteLine($"\nYou have successfully deposited $ {depositAmount:0.00} \r\nYour new balance is $ {balance:0.00}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid amount. Please try again!!!.");
+                    }
+                    break;
+
+                case "3": // Withdraw Money
+                    Console.Write("\nEnter the amount to withdraw: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal withdrawAmount) && withdrawAmount > 0)
+                    {
+                        if (withdrawAmount <= balance)
+                        {
+                            balance -= withdrawAmount;
+                            Console.WriteLine($"\nYou have successfully withdrawn $ {withdrawAmount:0.00}. \r\nYour new balance is $ {balance:0.00}.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nInsufficient balance.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid amount. Please enter a positive number.");
+                    }
+                    break;
+
+                case "4": // Exit
+                    running = false;
+                    Console.WriteLine("\nExiting the program...");
+                    break;
+
+                default:
+                    Console.WriteLine("\nInvalid choice. Please select a valid option.");
+                    break;
+            }
+
+            if (running)
+            {
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+            }
+        }
+    }
+}
